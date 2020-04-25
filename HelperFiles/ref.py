@@ -20,13 +20,13 @@ pattern = r""
 regex = re.compile(pattern)
 regex.match("abcd")
 
-re.split(r'\\n|\\r|\\t| ')
+re.split(r'\\n|\\r|\\t| ', '')
 
 # String Methods
 "".strip()
 "".count("ab")
 import string
-table = string.maketrans("abc", "cba")
+table = "".maketrans("abc", "cba")
 "".translate(table)
 
 # Array methods
@@ -49,7 +49,7 @@ d.values()
 d.items() # (key, value) pairs
 
 # Sets
-A = set(arr)
+A = set()
 B = {1,2,3}
 A | B
 A & B

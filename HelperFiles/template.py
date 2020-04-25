@@ -4,46 +4,65 @@
 # Curtis Babnik
 # curtisbabnik@gmail.com
 
-# This solution comes with some boilerplate that I use to speed along the process
-#
-# The intended use is to pipe input from a file. If you're not using a file for input
-# then please send an EOF character with ctrl-Z in windows or ctrl-D in unix.
+# ==================
+# Boiler Plate Setup
+# ==================
 
 # The following two libraries are installed on Google's test machines
 #import numpy as np
 #import scipy
 # Standard libraries that may be useful
+import sys
 #import math
 #import re
 #import itertools
 
-# grab input
-lines = []
-while True:
-    try:
-        lines.append(input())
-    except EOFError:
-        break
-cl = 0  # current line index
+def read(lines=None):
+    if lines is None:
+        return input()
+    ret = []
+    for i in range(lines):
+        ret[i] = input()
+    return ret
 
-# put input into different shapes
-raw_input = '\n'.join(lines)
-tokens = []
-for i in range(len(lines)):
-    tokens.append(lines[i].split(' '))
-def tryInt(s):
-    try: return int(s)
-    except ValueError: return None
-def tryFloat(s):
-    try: return int(s)
-    except ValueError: return None
-ints = list(map(lambda arr: list(map(tryInt,arr)), tokens))
-floats = list(map(lambda arr: list(map(tryFloat,arr)), tokens))
-ct = 0  # current token index
+def readTokens(lines=None):
+    if lines is None:
+        return input().split(' ')
+    return list(map(lambda s:s.split(' '), read(lines)))
 
-T = int(lines[0])  # number of tests/trials
-cl += 1
+def readInts(lines=None):
+    if lines is None:
+        return list(map(int, readTokens()))
+    return list(map(
+        lambda line: list(map(int, line)),
+        readTokens(lines)
+    ))
 
+def readFloats(lines=None):
+    if lines is None:
+        return list(map(float, readTokens()))
+    return list(map(
+        lambda line: list(map(float, line)),
+        readTokens(lines)
+    ))
+
+# somewhat useful for the interactive problems
+def printDebug(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def interact(output):
+    print(output)
+    response = input()
+    printDebug("%-20s%s" % (output, response))
+
+def remote_debug():
+    import time
+    ready = False
+    # manually attach to process and set this True
+    while not ready:
+        time.sleep(2)
+
+T = readInts()[0]  # number of tests/trials
 for t in range(T):
     # ====================
     # SOLUTION STARTS HERE
